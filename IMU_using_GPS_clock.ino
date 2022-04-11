@@ -4,7 +4,7 @@
 #include <Adafruit_GPS.h>
 
 #define TIME_24_HOUR      true //24-timers klokke
-#define HOUR_OFFSET       -9    //+2 timer (opprinnelig UTC tid)
+#define HOUR_OFFSET       -9    // Bruk 2 for CEST
 #define DISPLAY_ADDRESS   0x70
 
 SoftwareSerial gpsSerial(8, 7);  
