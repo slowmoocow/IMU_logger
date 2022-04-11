@@ -27,7 +27,6 @@ void setup(){
 }
 
 void loop(){
-
    if (gps.newNMEAreceived()) {
     gps.parse(gps.lastNMEA());
   }
@@ -62,6 +61,7 @@ void loop(){
 
   bmx160.getAllData(&Omagn, &Ogyro, &Oaccel);
 
+  //printer IMU data
   printTimeandDate(displayValue, hours, minutes, seconds, day, month, year);
   Serial.print("M ");
   Serial.print("X: "); Serial.print(Omagn.x); Serial.print("  ");
@@ -96,10 +96,10 @@ void enableGPSInterrupt() {
 //For tid er første 2 siffer timer, andre 2 er minutter og siste 2 er sekunder. 
 void printTimeandDate(int displayValue, int hours, int minutes, int seconds, int day, int month, int year) {
   Serial.print("TIME: "); 
-  if (TIME_24_HOUR && hours > 0 && hours < 10) {
+  if (TIME_24_HOUR && hours > 0 && hours < 10) { //setter tid til 01:00 istedenfor 1:00
     Serial.print("0");
   }
-  if (TIME_24_HOUR && hours == 0) {
+  if (TIME_24_HOUR && hours == 0) { //setter tid til 00:00 istedenfor :00
       Serial.print("00");
   }
   Serial.print(displayValue, DEC);
