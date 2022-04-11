@@ -4,7 +4,7 @@
 #include <Adafruit_GPS.h>
 
 #define TIME_24_HOUR      true //24-timers klokke
-#define HOUR_OFFSET       -9    // Bruk 2 for CEST
+#define HOUR_OFFSET       2    // Bruk 2 for CEST (Opprinnelig UCT tid)
 #define DISPLAY_ADDRESS   0x70
 
 SoftwareSerial gpsSerial(8, 7);  
@@ -93,13 +93,14 @@ void enableGPSInterrupt() {
   TIMSK0 |= _BV(OCIE0A);
 }
 
+//For tid er første 2 siffer timer, andre 2 er minutter og siste 2 er sekunder. 
 void printTimeandDate(int displayValue, int hours, int minutes, int seconds, int day, int month, int year) {
-  Serial.print("TIME: ");
-  if (TIME_24_HOUR && 0 < hours < 10) {
+  Serial.print("TIME: "); 
+  if (TIME_24_HOUR && hours > 0 && hours < 10) {
     Serial.print("0");
-    if (TIME_24_HOUR && hours == 0) {
-      Serial.print("0");
-    }
+  }
+  if (TIME_24_HOUR && hours == 0) {
+      Serial.print("00");
   }
   Serial.print(displayValue, DEC);
   if(seconds < 10){
@@ -117,6 +118,4 @@ void printTimeandDate(int displayValue, int hours, int minutes, int seconds, int
   Serial.print(month, DEC);
   Serial.print(year, DEC);
   Serial.print(" | ");
-
-  
 }
